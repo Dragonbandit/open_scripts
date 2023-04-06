@@ -1,0 +1,130 @@
+#!/usr/python3
+
+
+import os
+import socket
+
+hostname = socket.gethostname()
+result_ip = socket.gethostbyname(hostname)
+
+#nmap scans to enumerate open ports
+target_ip = input("enter target ip ")
+#menu bones
+def menu():
+    print("[1] option 1: Whats open/closed")
+    print("[2] option 2: http hidden dir")
+    print("[3] option 3: http deep scan")
+    print("[4] option 4: share enum")
+    print("[5] option 5: Target Ip")
+    print("[6] option 6: SSH")
+    print("[7] option 7: FTP")
+    print("[8] option 8: SMB")
+    print("[9] option 9: My ip")
+    print("[0] option 0: Exit")
+    
+menu()
+option = int(input("Enter your option "))
+
+while option != 0:
+    if option == 1:
+        print("--------------------------------------")
+        
+        
+        #run option 1
+        os.system(f"sudo nmap -Pn -sV -sS {target_ip}")
+        
+        
+        print("--------------------------------------")
+    elif option == 2:
+        print("--------------------------------------")
+        
+        
+        #run option 2
+        os.system(f"nmap -Pn -p 80 --script http-enum {target_ip}")
+        
+        
+        print("--------------------------------------")
+    else:
+        #print("invalid option")
+        pass
+    if option == 3:
+        print("--------------------------------------")
+        
+        
+        os.system(f"gobuster dir -u http://{target_ip} -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt")
+        
+        print("this scan is broken please fix")
+        print("--------------------------------------")
+    elif option == 4:
+        print("--------------------------------------")
+        
+        
+        print("opt 4")
+        
+        
+        print("--------------------------------------")
+    else:
+        #print("invalid option")
+        pass
+    if option == 5:
+        print("--------------------------------------")
+        
+        
+        print(f"target ip: {target_ip}")
+        
+        
+        print("--------------------------------------")
+    elif option == 6:
+        print("--------------------------------------")
+        
+        
+        username = input("whats the username ")
+        
+        
+        os.system(f"hydra -l {username} -P /usr/share/wordlists/Seclists/Passwords/2020-200_most_used_passwords.txt -t 4 ssh://{target_ip}")
+        
+        
+        print("--------------------------------------")
+    else:
+        #print("inavalid option") 
+        pass
+    if option == 7:
+        print("--------------------------------------")
+        
+        
+        username = input("whats the username ")
+        os.system(f"hydra -l {username} -P /usr/share/ordlists/Seclists/Passwords/2020-200_most_used_passwords.txt ftp://{target_ip}")
+        
+        
+        print("--------------------------------------")
+    elif option == 8:
+        print("--------------------------------------")
+        
+        
+        os.system(f"smbclient //{target_ip}/anonymous")
+        
+
+        print("--------------------------------------")
+
+    else:
+        pass
+    if option == 9:
+        print("--------------------------------------")
+        
+        
+        os.system("hostname -I")
+        
+        
+        print("--------------------------------------")
+        
+
+    elif option == 0:
+        exit()
+    else:
+        print("invalid option")
+        
+    menu()
+    option = int(input("Enter your option "))
+print("finished")
+
+#unfinished havent got back to it
